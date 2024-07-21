@@ -7,6 +7,9 @@ intermediate/
 dump*
 */dump*
 */*/dump*
+log
+*/log
+*/*/log
 # Prerequisites
 *.d
 
