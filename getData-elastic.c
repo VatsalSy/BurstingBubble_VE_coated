@@ -50,7 +50,7 @@ int main(int a, char const *arguments[])
       D2c[] = -10;
     }
 
-    vel[] = (clamp(f1[]+f2[],0.,1.)*(1-1e-3) + 1e-3)*sqrt(sq(u.x[])+sq(u.y[]));
+    vel[] = sqrt(sq(u.x[])+sq(u.y[]));
 
     trA[] = (tau_p.x.x[] + tau_p.y.y[] + tau_qq[])/2.0;
 

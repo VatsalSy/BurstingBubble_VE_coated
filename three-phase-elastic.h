@@ -130,19 +130,19 @@ event properties (i++) {
   }
 
   foreach(){
-  rhov[] = cm[]*rho(sf1[], sf2[]);
+    rhov[] = cm[]*rho(sf1[], sf2[]);
 
-  Gpd[] = 0.;
+    Gpd[] = 0.;
 
-  if (clamp(sf1[]*(1-sf2[]), 0., 1.) > TOLelastic){
-    Gpd[] += G1*clamp(sf1[]*(1-sf2[]), 0., 1.);
-  }
-  if (clamp(sf1[]*sf2[], 0., 1.) > TOLelastic){
-    Gpd[] += G2*clamp(sf1[]*sf2[], 0., 1.);
-  }
-  if (clamp((1-sf1[]), 0., 1.) > TOLelastic){
-    Gpd[] += G3*clamp((1-sf1[]), 0., 1.);
-  }
+    if (clamp(sf1[]*(1-sf2[]), 0., 1.) > TOLelastic){
+      Gpd[] += G1*clamp(sf1[]*(1-sf2[]), 0., 1.);
+    }
+    if (clamp(sf1[]*sf2[], 0., 1.) > TOLelastic){
+      Gpd[] += G2*clamp(sf1[]*sf2[], 0., 1.);
+    }
+    if (clamp((1-sf1[]), 0., 1.) > TOLelastic){
+      Gpd[] += G3*clamp((1-sf1[]), 0., 1.);
+    }
   
   }
 
