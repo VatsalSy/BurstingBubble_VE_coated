@@ -10,6 +10,8 @@ dump*
 log
 */log
 */*/log
+Video/*
+Video
 # Prerequisites
 *.d
 
