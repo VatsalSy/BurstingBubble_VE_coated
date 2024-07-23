@@ -48,7 +48,7 @@ def gettingfield(filename, zmin, zmax, rmax, nr, Ohbulk, muR_cb, muR_ab, Ec):
     temp1 = stderr.decode("utf-8")
     temp2 = temp1.split("\n")
     # print(temp2) #debugging
-    Rtemp, Ztemp, D2temp, veltemp, Utemp, Vtemp, taupTemp = [],[],[],[],[],[],[]
+    Rtemp, Ztemp, D2temp, veltemp, taupTemp = [],[],[],[],[]
 
     for n1 in range(len(temp2)):
         temp3 = temp2[n1].split(" ")
