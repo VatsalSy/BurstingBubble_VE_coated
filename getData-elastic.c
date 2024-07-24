@@ -10,7 +10,7 @@
 
 char filename[80];
 int nx, ny, len;
-double xmin, ymin, xmax, ymax, Deltax, Deltay, Ohbulk, muR_cb, muR_ab, Ec;
+double xmin, ymin, xmax, ymax, Deltax, Deltay, Ohbulk, muR_cb, muR_ab;
 
 scalar D2c[], vel[], trA[];
 scalar * list = NULL;
@@ -25,7 +25,6 @@ int main(int a, char const *arguments[])
   Ohbulk = atof(arguments[7]);
   muR_cb = atof(arguments[8]);
   muR_ab = atof(arguments[9]);
-  Ec = atof(arguments[10]);
 
   list = list_add (list, D2c);
   list = list_add (list, vel);

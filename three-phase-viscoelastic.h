@@ -19,9 +19,11 @@ The densities and dynamic viscosities for fluid 1, 2 and 3 are *rho1*,
 #include "vof.h"
 scalar f1[], f2[], *interfaces = {f1, f2};
 (const) scalar Gp = unity; // elastic modulus
+(const) scalar lambda = unity; // relaxation time
 
 double rho1 = 1., mu1 = 0., rho2 = 1., mu2 = 0., rho3 = 1., mu3 = 0.;
 double G1 = 0., G2 = 0., G3 = 0.; // elastic moduli
+double lambda1 = 0., lambda2 = 0., lambda3 = 0.; // relaxation times
 double TOLelastic = 1e-1; // tolerance for elastic modulus
 
 /**
@@ -31,11 +33,13 @@ volume $\alpha=1/\rho$ as well as the cell-centered density. */
 face vector alphav[];
 scalar rhov[];
 scalar Gpd[];
+scalar lambdapd[];
 
 event defaults (i = 0) {
   alpha = alphav;
   rho = rhov;
   Gp = Gpd;
+  lambda = lambdapd;
   /**
   If the viscosity is non-zero, we need to allocate the face-centered
   viscosity field. */
@@ -133,15 +137,19 @@ event properties (i++) {
     rhov[] = cm[]*rho(sf1[], sf2[]);
 
     Gpd[] = 0.;
+    lambdapd[] = 0.;
 
     if (clamp(sf1[]*(1-sf2[]), 0., 1.) > TOLelastic){
       Gpd[] += G1*clamp(sf1[]*(1-sf2[]), 0., 1.);
+      lambdapd[] += lambda1*clamp(sf1[]*(1-sf2[]), 0., 1.);
     }
     if (clamp(sf1[]*sf2[], 0., 1.) > TOLelastic){
       Gpd[] += G2*clamp(sf1[]*sf2[], 0., 1.);
+      lambdapd[] += lambda2*clamp(sf1[]*sf2[], 0., 1.);
     }
     if (clamp((1-sf1[]), 0., 1.) > TOLelastic){
       Gpd[] += G3*clamp((1-sf1[]), 0., 1.);
+      lambdapd[] += lambda3*clamp((1-sf1[]), 0., 1.);
     }
   
   }
