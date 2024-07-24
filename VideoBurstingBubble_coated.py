@@ -13,6 +13,10 @@ from matplotlib.ticker import StrMethodFormatter
 import multiprocessing as mp
 from functools import partial
 
+import matplotlib.colors as mcolors
+custom_colors = ["white", "#DA8A67", "#A0522D", "#400000"]
+custom_cmap = mcolors.LinearSegmentedColormap.from_list("custom_hot", custom_colors)
+
 matplotlib.rcParams['font.family'] = 'serif'
 matplotlib.rcParams['text.usetex'] = True
 matplotlib.rcParams['text.latex.preamble'] = r'\usepackage{amsmath}'
@@ -121,7 +125,7 @@ def process_timestep(ti, folder, nGFS, Ldomain, GridsPerR, Ohbulk, muR_cb, muR_a
     ax.add_collection(line_segments)
 
     cntrl1 = ax.imshow(taus, cmap="hot_r", interpolation='Bilinear', origin='lower', extent=[-rminp, -rmaxp, zminp, zmaxp], vmax=1.0, vmin=-3.0)
-    cntrl2 = ax.imshow(taup, interpolation='Bilinear', cmap="RdPu", origin='lower', extent=[rminp, rmaxp, zminp, zmaxp], vmax=1.0, vmin=-3.0)
+    cntrl2 = ax.imshow(taup, interpolation='Bilinear', cmap=custom_cmap, origin='lower', extent=[rminp, rmaxp, zminp, zmaxp], vmax=1.0, vmin=-3.0)
 
     ax.set_aspect('equal')
     ax.set_xlim(rmin, rmax)

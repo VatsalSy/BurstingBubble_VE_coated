@@ -5,8 +5,12 @@
 */
 #include "axi.h"
 #include "navier-stokes/centered.h"
-#include "three-phase-elastic.h"
-#include "log-conform-elastic.h"
+// #include "three-phase-elastic.h"
+// #include "log-conform-elastic.h"
+
+scalar f1[], f2[], *interfaces = {f1, f2};
+symmetric tensor tau_p[];
+scalar tau_qq[];
 
 char filename[80];
 int nx, ny, len;
