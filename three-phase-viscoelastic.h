@@ -74,7 +74,7 @@ event tracer_advection (i++)
 {
   if (i > 1){
   foreach(){
-    if ((f2[] > 0.5) && (f1[] < 0.5)){
+    if ((f2[] > 1e-2) && (f1[] < 1.-1e-2)){
       f1[] = f2[];
     }
   }

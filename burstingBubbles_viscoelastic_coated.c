@@ -1,4 +1,4 @@
-/** Title: Bursting bubble initial condition
+/** Title: Bursting bubble when the coating has a tendency to fully wet
 # Author: Vatsal Sanjay
 # vatsalsanjay@gmail.com
 # Physics of Fluids
@@ -30,7 +30,7 @@ int MAXlevel;
 
 int main(int argc, char const *argv[]) {
   
-  // bulk is water for case III and case IV
+  // bulk is water for cases III and IV
   Ohbulk = 0.003; // this is for case III
   
   muR_cb = 3.3; // this is only the solvent viscosity coated to bulk viscosity ratio
@@ -59,7 +59,7 @@ int main(int argc, char const *argv[]) {
   rho3 = rho_ab; mu3 = muR_ab*Ohbulk; G3 = 0.; lambda3 = 0.;
 
   f1.sigma = 27.06/72; // surface tension coating-air!!!
-  f2.sigma = 32.86/72; // oil and air
+  f2.sigma = 32.86/72; // interfacial tension bulk-coating!!!
 
   fprintf(ferr, "Level %d tmax %g. Oh %3.2e, muR_cb %3.2e, rho_cb %3.2e, Ec %3.2e, De %3.2e\n", MAXlevel, tmax, Ohbulk, muR_cb, rho_cb, Ec, De);
   run();
