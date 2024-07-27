@@ -40,7 +40,7 @@ int main(int argc, char const *argv[]) {
 
   tmax = 1e0;
   Ldomain = 8e0;
-  MAXlevel = 11;
+  MAXlevel = 12;
 
   L0=Ldomain;
   X0=-2e0; Y0=0.;
@@ -67,8 +67,12 @@ event init(t = 0){
     /**
     Initialization for f1 and f2
     */
-    sprintf(filename1, "CaseIII_VeryThinLayer_PIB_Hexa2wt/f1.dat");
-    sprintf(filename2, "CaseIII_VeryThinLayer_PIB_Hexa2wt/f2.dat");
+    // sprintf(filename1, "CaseIII_VeryThinLayer_PIB_Hexa2wt/f1.dat");
+    // sprintf(filename2, "CaseIII_VeryThinLayer_PIB_Hexa2wt/f2.dat");
+    // sprintf(filename1, "CaseI_VeryThinLayer_PEO0.2wt/f1.dat");
+    // sprintf(filename2, "CaseI_VeryThinLayer_PEO0.2wt/f2.dat");
+    sprintf(filename1, "CaseII_thickLayer_PIB_PEO0.2wt/f1.dat");
+    sprintf(filename2, "CaseII_thickLayer_PIB_PEO0.2wt/f2.dat");
 
     FILE * fp1 = fopen(filename1,"rb");
     if (fp1 == NULL){

@@ -1,11 +1,11 @@
-/** Title: Bursting bubble initial condition
+/** Title: Bursting bubble when the coating has a tendency to dewet
 # Author: Vatsal Sanjay
 # vatsalsanjay@gmail.com
 # Physics of Fluids
-# Last Updated: Jul 21 2024
+# Last Updated: Jul 27, 2024
 */
 
-// 1 is coating, 2 is bulk and 3 is air
+// 1 is bulk (full wetting), 2 is coating (water+PEO, this will dewet) and 3 is air
 #include "axi.h"
 #include "navier-stokes/centered.h"
 #define FILTERED
@@ -30,17 +30,17 @@ int MAXlevel;
 
 int main(int argc, char const *argv[]) {
   
-  // bulk is water for case III and case IV
-  Ohbulk = 0.003; // this is for case III
+  // bulk is hexadecane for cases I and II
+  Ohbulk = 0.017; // this is for case I
   
-  muR_cb = 3.3; // this is only the solvent viscosity coated to bulk viscosity ratio
-  rho_cb = 0.781;
+  muR_cb = 1e0/3.3; // this is only the (solvent) viscosity coated to bulk viscosity ratio
+  rho_cb = 1e0/0.781;
   
-  muR_ab = 1e-2;
-  rho_ab = 1e-3;
+  muR_ab = 5e-3;
+  rho_ab = 1.3e-3;
 
-  Ec = 5e-1;
-  De = 0.0576;
+  Ec = 0.0;
+  De = 0.0;
 
   tmax = 1e0;
   Ldomain = 8e0;
@@ -54,12 +54,12 @@ int main(int argc, char const *argv[]) {
   sprintf (comm, "mkdir -p intermediate");
   system(comm);
 
-  rho1 = rho_cb; mu1 = muR_cb*Ohbulk; G1 = Ec; lambda1 = De;
-  rho2 = 1e0; mu2 = Ohbulk; G2 = 0.; lambda2 = 0.;
+  rho1 = 1e0; mu1 = Ohbulk; G1 = 0.; lambda1 = 0.;
+  rho2 = rho_cb; mu2 = muR_cb*Ohbulk; G2 = Ec; lambda2 = De;
   rho3 = rho_ab; mu3 = muR_ab*Ohbulk; G3 = 0.; lambda3 = 0.;
 
-  f1.sigma = 27.06/72; // surface tension coating-air!!!
-  f2.sigma = 32.86/72; // oil and air
+  f1.sigma = 1e0; // surface tension bulk-air!!!: 0.02747 N/m
+  f2.sigma = 26.8/27.47; // bulk-coating interfacial tension: 0.0268 N/m
 
   fprintf(ferr, "Level %d tmax %g. Oh %3.2e, muR_cb %3.2e, rho_cb %3.2e, Ec %3.2e, De %3.2e\n", MAXlevel, tmax, Ohbulk, muR_cb, rho_cb, Ec, De);
   run();
@@ -72,10 +72,10 @@ event init(t = 0){
     /**
     Initialization for f1 and f2
     */
-    // sprintf(filename1, "initialconditions/CaseIII_VeryThinLayer_PIB_Hexa2wt/f1.dat");
-    // sprintf(filename2, "initialconditions/CaseIII_VeryThinLayer_PIB_Hexa2wt/f2.dat");
-    sprintf(filename1, "initialconditions/CaseIV_thickLayer_PIB_Hexa2wt/f1.dat");
-    sprintf(filename2, "initialconditions/CaseIV_thickLayer_PIB_Hexa2wt/f2.dat");
+    sprintf(filename1, "initialconditions/CaseI_VeryThinLayer_PEO0.2wt/f1.dat");
+    sprintf(filename2, "initialconditions/CaseI_VeryThinLayer_PEO0.2wt/f2.dat");
+    // sprintf(filename1, "initialconditions/CaseII_thickLayer_PIB_PEO0.2wt/f1.dat");
+    // sprintf(filename2, "initialconditions/CaseII_thickLayer_PIB_PEO0.2wt/f2.dat");
 
     FILE * fp1 = fopen(filename1,"rb");
     if (fp1 == NULL){
@@ -106,7 +106,7 @@ event init(t = 0){
     vertex scalar phi1[], phi2[];
     foreach_vertex(){
       phi1[] = -(d1[] + d1[-1] + d1[0,-1] + d1[-1,-1])/4.;
-      phi2[] = -(d2[] + d2[-1] + d2[0,-1] + d2[-1,-1])/4.;
+      phi2[] = (d2[] + d2[-1] + d2[0,-1] + d2[-1,-1])/4.;
     }
     /**
     We can now initialize the volume fractions in the domain. */
