@@ -3,7 +3,9 @@
 # vatsalsanjay@gmail.com
 # Physics of Fluids
 */
-#include "navier-stokes/centered.h"
+
+#include "utils.h"
+#include "output.h"
 #include "fractions.h"
 
 scalar f[], f1[], f2[];

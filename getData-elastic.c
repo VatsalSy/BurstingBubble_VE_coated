@@ -3,18 +3,18 @@
 # vatsalsanjay@gmail.com
 # Physics of Fluids
 */
-#include "axi.h"
-#include "navier-stokes/centered.h"
-// #include "three-phase-elastic.h"
-// #include "log-conform-elastic.h"
 
-scalar f1[], f2[], *interfaces = {f1, f2};
+#include "utils.h"
+#include "output.h"
+
+scalar f1[], f2[];
+vector u[];
 symmetric tensor tau_p[];
 scalar tau_qq[];
 
 char filename[80];
 int nx, ny, len;
-double xmin, ymin, xmax, ymax, Deltax, Deltay, Ohbulk, muR_cb, muR_ab;
+double xmin, ymin, xmax, ymax, Deltax, Deltay, Oh1, Oh2, Oh3;
 
 scalar D2c[], vel[], trA[];
 scalar * list = NULL;
@@ -26,9 +26,9 @@ int main(int a, char const *arguments[])
   xmax = atof(arguments[4]); ymax = atof(arguments[5]);
   ny = atoi(arguments[6]);
 
-  Ohbulk = atof(arguments[7]);
-  muR_cb = atof(arguments[8]);
-  muR_ab = atof(arguments[9]);
+  Oh1 = atof(arguments[7]);
+  Oh2 = atof(arguments[8]);
+  Oh3 = atof(arguments[9]);
 
   list = list_add (list, D2c);
   list = list_add (list, vel);
@@ -45,7 +45,7 @@ int main(int a, char const *arguments[])
     double D33 = (u.x[1,0] - u.x[-1,0])/(2*Delta);
     double D13 = 0.5*( (u.y[1,0] - u.y[-1,0] + u.x[0,1] - u.x[0,-1])/(2*Delta) );
     double D2 = (sq(D11)+sq(D22)+sq(D33)+2.0*sq(D13));
-    D2c[] = 2*( muR_cb*Ohbulk*clamp(f1[]*(1-f2[]), 0., 1.) + Ohbulk*clamp(f1[]*f2[], 0., 1.) + muR_ab*Ohbulk*clamp(1-f1[], 0., 1.) )*D2;
+    D2c[] = 2*( Oh1*clamp(f1[]*(1-f2[]), 0., 1.) + Oh2*clamp(f1[]*f2[], 0., 1.) + Oh3*clamp(1-f1[], 0., 1.) )*D2;
     
     if (D2c[] > 0.){
       D2c[] = log(D2c[])/log(10);
