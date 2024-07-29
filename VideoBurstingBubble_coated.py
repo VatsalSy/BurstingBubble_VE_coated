@@ -45,8 +45,8 @@ def gettingFacets(filename,includeCoat='true'):
                     skip = True
     return segs
 
-def gettingfield(filename, zmin, zmax, rmax, nr, Ohbulk, muR_cb, muR_ab):
-    exe = ["./getData-elastic", filename, str(zmin), str(0), str(zmax), str(rmax), str(nr), str(Ohbulk), str(muR_cb), str(muR_ab)]
+def gettingfield(filename, zmin, zmax, rmax, nr, Oh1, Oh2, Oh3):
+    exe = ["./getData-elastic", filename, str(zmin), str(0), str(zmax), str(rmax), str(nr), str(Oh1), str(Oh2), str(Oh3)]
     p = sp.Popen(exe, stdout=sp.PIPE, stderr=sp.PIPE)
     stdout, stderr = p.communicate()
     temp1 = stderr.decode("utf-8")
@@ -84,7 +84,7 @@ def gettingfield(filename, zmin, zmax, rmax, nr, Ohbulk, muR_cb, muR_ab):
     return R, Z, D2, vel, taup, nz
 # ----------------------------------------------------------------------------------------------------------------------
 
-def process_timestep(ti, folder, nGFS, Ldomain, GridsPerR, Ohbulk, muR_cb, muR_ab, rmin, rmax, zmin, zmax, lw):
+def process_timestep(ti, folder, nGFS, Ldomain, GridsPerR, Oh1, Oh2, Oh3, rmin, rmax, zmin, zmax, lw):
     t = 0.01 * ti
     place = f"intermediate/snapshot-{t:.4f}"
     name = f"{folder}/{int(t*1000):08d}.png"
@@ -105,7 +105,7 @@ def process_timestep(ti, folder, nGFS, Ldomain, GridsPerR, Ohbulk, muR_cb, muR_a
         return
 
     nr = int(GridsPerR * Ldomain)
-    R, Z, taus, vel, taup, nz = gettingfield(place, zmin, zmax, rmax, nr, Ohbulk, muR_cb, muR_ab)
+    R, Z, taus, vel, taup, nz = gettingfield(place, zmin, zmax, rmax, nr, Oh1, Oh2, Oh3)
     zminp, zmaxp, rminp, rmaxp = Z.min(), Z.max(), R.min(), R.max()
 
     # Plotting
@@ -153,7 +153,7 @@ def main():
     Ldomain = 6
     GridsPerR = 200
     nr = int(GridsPerR * Ldomain)
-    Ohbulk, muR_cb, muR_ab, = 0.003, 3.3, 1e-2
+    Oh1, Oh2, Oh3, = (3e-3)*3.3, 3e-3, 3e-5
     rmin, rmax, zmin, zmax = [-Ldomain/2, Ldomain/2, -1.0, Ldomain-1.0]
     lw = 2
     folder = 'Video'
@@ -163,7 +163,7 @@ def main():
 
     # Prepare the partial function with fixed arguments
     process_func = partial(process_timestep, folder=folder, nGFS=nGFS, Ldomain=Ldomain, 
-                           GridsPerR=GridsPerR, Ohbulk=Ohbulk, muR_cb=muR_cb, muR_ab=muR_ab, 
+                           GridsPerR=GridsPerR, Oh1=Oh1, Oh2=Oh2, Oh3=Oh3, 
                            rmin=rmin, rmax=rmax, zmin=zmin, zmax=zmax, lw=lw)
 
     # Use all available CPU cores
