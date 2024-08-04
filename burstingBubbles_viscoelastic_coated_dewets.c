@@ -39,8 +39,8 @@ int main(int argc, char const *argv[]) {
   muR_ab = 5e-3;
   rho_ab = 1.3e-3;
 
-  Ec = 0.0;
-  De = 0.0;
+  Ec = 0.20;
+  De = 0.20;
 
   tmax = 1e0;
   Ldomain = 8e0;

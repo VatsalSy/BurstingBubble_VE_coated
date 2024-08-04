@@ -62,9 +62,7 @@ int main(int a, char const *arguments[])
     } else {
       trA[] = -10;
     }
-    if (f1[]*(1-f2[]) < 1.-1e-6){
-      trA[] = -20;
-    }
+
   }
 
   FILE * fp = ferr;
