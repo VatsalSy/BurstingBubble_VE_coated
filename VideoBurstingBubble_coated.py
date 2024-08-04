@@ -125,7 +125,9 @@ def process_timestep(ti, folder, nGFS, Ldomain, GridsPerR, Oh1, Oh2, Oh3, rmin, 
     ax.add_collection(line_segments)
 
     cntrl1 = ax.imshow(taus, cmap="hot_r", interpolation='Bilinear', origin='lower', extent=[-rminp, -rmaxp, zminp, zmaxp], vmax=1.0, vmin=-3.0)
-    cntrl2 = ax.imshow(taup, interpolation='Bilinear', cmap=custom_cmap, origin='lower', extent=[rminp, rmaxp, zminp, zmaxp], vmax=1.0, vmin=-3.0)
+
+    # TODO: fixme the colorbar bounds for taup must be set manually based on the simulated case.
+    cntrl2 = ax.imshow(taup, interpolation='Bilinear', cmap=custom_cmap, origin='lower', extent=[rminp, rmaxp, zminp, zmaxp], vmax=0.0, vmin=-3.0)
 
     ax.set_aspect('equal')
     ax.set_xlim(rmin, rmax)
