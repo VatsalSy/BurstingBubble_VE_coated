@@ -12,6 +12,12 @@ log
 */*/log
 Video/*
 Video
+
+# no binaries
+burstingBubbles_elastic_coated
+burstingBubbles_viscoelastic_coated_dewets
+burstingBubbles_viscoelastic_coated
+
 # Prerequisites
 *.d
 
