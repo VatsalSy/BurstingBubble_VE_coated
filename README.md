@@ -1,5 +1,8 @@
 # BurstingBubble_VE_coated
- Bursting VE layer coated gas bubbles at a liquid-gas interface
+
+This website has moved to [comphy-lab/BurstingBubble_VE_coated](https://github.com/comphy-lab/BurstingBubble_VE_coated).
+
+Bursting VE layer coated gas bubbles at a liquid-gas interface
 
 ## Use the stable version of the code:
 - [burstingBubbles_viscoelastic_coated.c](burstingBubbles_viscoelastic_coated.c) where the coating is viscoelastic and wets both the bubble-bulk and the bulk-ambient surface (coating is fully wetting).
